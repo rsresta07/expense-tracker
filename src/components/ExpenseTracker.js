@@ -27,6 +27,7 @@ const ExpenseTracker = () => {
 
     return (
         <div className="flex h-auto">
+            {/** Menu section but it doesn't work right now */}
             <div className="w-64 bg-gray-200 p-4">
                 <h2 className="text-xl font-semibold">Menu</h2>
                 <ul className="mt-4">
@@ -46,14 +47,19 @@ const ExpenseTracker = () => {
             </div>
             <div className="flex-1 p-6">
                 <h2 className="text-2xl font-bold mb-4">Expense Tracker</h2>
+                {/* ExpenseForm.js ko part load garcha */}
                 <ExpenseForm onAddExpense={onAddExpense} />
+
+                {/* ExpenseFilter.js ko part load garcha */}
                 <ExpenseFilter
                     startDate={startDate}
                     setStartDate={setStartDate}
                     endDate={endDate}
                     setEndDate={setEndDate}
                 />
+                {/* ExpenseList.js ko part load garcha */}
                 <ExpenseList expenses={filteredExpenses} />
+
                 <div className="flex items-center mt-4 pb-4">
                     <h3 className="text-xl font-semibold">Total Expenses:</h3>
                     <h3 className="text-xl font-semibold text-green-500 ml-2">

@@ -11,7 +11,7 @@ const ExpenseForm = ({ onAddExpense }) => {
 
     const onSubmit = (data) => {
         onAddExpense(data);
-        reset(); // Reset the form fields after submission
+        reset();
     };
 
     // Get today's date in YYYY-MM-DD format
