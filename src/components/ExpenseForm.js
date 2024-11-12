@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { getDatabase, ref, set } from "firebase/database";
 
 const ExpenseForm = ({ onAddExpense }) => {
     const {
@@ -7,7 +8,13 @@ const ExpenseForm = ({ onAddExpense }) => {
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            expenseName: "",
+            expenseAmount: 0,
+            expenseDate: "",
+        },
+    });
 
     const onSubmit = (data) => {
         onAddExpense(data);
@@ -28,8 +35,8 @@ const ExpenseForm = ({ onAddExpense }) => {
                 <div>
                     <input
                         type="text"
-                        id="name"
-                        {...register("name", {
+                        id="expenseName"
+                        {...register("expenseName", {
                             required: "Expense Name is required",
                         })}
                         className={`border border-gray-300 rounded-md p-2 w-full ${
@@ -53,8 +60,8 @@ const ExpenseForm = ({ onAddExpense }) => {
                 <div>
                     <input
                         type="number"
-                        id="amount"
-                        {...register("amount", {
+                        id="expenseAmount"
+                        {...register("expenseAmount", {
                             required: "Amount is required",
                             min: 0,
                         })}
@@ -79,8 +86,8 @@ const ExpenseForm = ({ onAddExpense }) => {
                 <div>
                     <input
                         type="date"
-                        id="date"
-                        {...register("date", {
+                        id="expenseDate"
+                        {...register("expenseDate", {
                             required: "Date is required",
                             validate: (value) =>
                                 new Date(value) <= new Date() ||

@@ -1,6 +1,15 @@
 import React from "react";
+import axios from "axios";
 
-const ExpenseList = ({ expenses }) => {
+const ExpenseList = ({ response }) => {
+     const getPost = async () => {
+         const response = await axios(
+             "https://expense-tracker-c44b3-default-rtdb.asia-southeast1.firebasedatabase.app/expenses.json"
+         );
+         // const list = await response.json();
+         console.log(response.data);
+     };
+
     return (
         <div className="mt-6">
             <h3 className="text-xl font-semibold mb-4">Expense List</h3>
@@ -19,7 +28,7 @@ const ExpenseList = ({ expenses }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {expenses.length === 0 ? (
+                    {/* {response.length === 0 ? (
                         <tr>
                             <td
                                 colSpan="3"
@@ -29,20 +38,12 @@ const ExpenseList = ({ expenses }) => {
                             </td>
                         </tr>
                     ) : (
-                        expenses.map((expense, index) => (
-                            <tr key={index} className="hover:bg-gray-100">
-                                <td className="border-b border-gray-300 px-4 py-2 text-left">
-                                    {expense.name}
-                                </td>
-                                <td className="border-b border-gray-300 px-4 py-2 text-left">
-                                    {expense.amount}
-                                </td>
-                                <td className="border-b border-gray-300 px-4 py-2 text-left">
-                                    {expense.date}
-                                </td>
-                            </tr>
-                        ))
-                    )}
+                        <tr>
+                            <td>
+
+                            </td>
+                        </tr>
+                    )} */}
                 </tbody>
             </table>
         </div>
