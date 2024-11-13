@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { getDatabase, ref, set } from "firebase/database";
 
 const ExpenseForm = ({ onAddExpense }) => {
     const {
@@ -11,8 +10,8 @@ const ExpenseForm = ({ onAddExpense }) => {
     } = useForm({
         defaultValues: {
             expenseName: "",
-            expenseAmount: 0,
-            expenseDate: "",
+            expenseAmount: "",
+            expenseDate: new Date().toISOString().split("T")[0],
         },
     });
 
@@ -40,14 +39,14 @@ const ExpenseForm = ({ onAddExpense }) => {
                             required: "Expense Name is required",
                         })}
                         className={`border border-gray-300 rounded-md p-2 w-full ${
-                            errors.name ? "border-red-500" : ""
+                            errors.expenseName ? "border-red-500" : ""
                         }`}
                     />
                 </div>
                 <div className="text-left flex items-center">
-                    {errors.name && (
-                        <label className="error-message text-red-500 text-sm">
-                            {errors.name.message}
+                    {errors.expenseName && (
+                        <label className="error-message text-red-500 text-base">
+                            {errors.expenseName.message}
                         </label>
                     )}
                 </div>
@@ -66,14 +65,14 @@ const ExpenseForm = ({ onAddExpense }) => {
                             min: 0,
                         })}
                         className={`border border-gray-300 rounded-md p-2 w-full ${
-                            errors.amount ? "border-red-500" : ""
+                            errors.expenseAmount ? "border-red-500" : ""
                         }`}
                     />
                 </div>
                 <div className="text-left flex items-center">
-                    {errors.amount && (
-                        <label className="error-message text-red-500 text-sm">
-                            {errors.amount.message}
+                    {errors.expenseAmount && (
+                        <label className="error-message text-red-500 text-base">
+                            {errors.expenseAmount.message}
                         </label>
                     )}
                 </div>
@@ -94,23 +93,25 @@ const ExpenseForm = ({ onAddExpense }) => {
                                 "Future dates are not allowed",
                         })}
                         className={`border border-gray-300 rounded-md p-2 w-full ${
-                            errors.date ? "border-red-500" : ""
+                            errors.expenseDate ? "border-red-500" : ""
                         }`}
                         max={today} // Set max attribute to today's date
                     />
                 </div>
                 <div className="text-left flex items-center">
-                    {errors.date && (
-                        <label className="error-message text-red-500 text-sm">
-                            {errors.date.message}
+                    {errors.expenseDate && (
+                        <label className="error-message text-red-500 text-xl">
+                            {errors.expenseDate.message}
                         </label>
                     )}
                 </div>
 
-                <div className="col-span-3">
+                <div></div>
+
+                <div>
                     <button
                         type="submit"
-                        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition font-bold"
+                        className="bg-blue-500 w-full text-white py-2 px-4 rounded-md hover:bg-blue-600 transition font-bold mb-4"
                     >
                         Add Expense
                     </button>

@@ -1,14 +1,39 @@
-import React from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 
-const ExpenseList = ({ response }) => {
-     const getPost = async () => {
-         const response = await axios(
-             "https://expense-tracker-c44b3-default-rtdb.asia-southeast1.firebasedatabase.app/expenses.json"
-         );
-         // const list = await response.json();
-         console.log(response.data);
-     };
+const ExpenseList = ({
+    expenses,
+    startDate,
+    endDate,
+    filterTriggered,
+    refresh,
+}) => {
+    const [filteredExpenses, setFilteredExpenses] = useState({});
+
+    useEffect(() => {
+        filterExpenses();
+    }, [filterTriggered, expenses, refresh]); // Add refresh to dependencies
+
+    const filterExpenses = () => {
+        const filtered = Object.keys(expenses).reduce((result, key) => {
+            const expenseDate = new Date(expenses[key]["expense-date"]);
+            if (
+                (!startDate || expenseDate >= new Date(startDate)) &&
+                (!endDate || expenseDate <= new Date(endDate))
+            ) {
+                result[key] = { ...expenses[key], date: expenseDate };
+            }
+            return result;
+        }, {});
+
+        const sortedFiltered = Object.entries(filtered)
+            .sort(([, a], [, b]) => b.date - a.date)
+            .reduce((acc, [key, value]) => {
+                acc[key] = value;
+                return acc;
+            }, {});
+
+        setFilteredExpenses(sortedFiltered);
+    };
 
     return (
         <div className="mt-6">
@@ -27,23 +52,32 @@ const ExpenseList = ({ response }) => {
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-                    {/* {response.length === 0 ? (
+                <tbody className="text-left">
+                    {filteredExpenses &&
+                    Object.keys(filteredExpenses).length > 0 ? (
+                        Object.keys(filteredExpenses).map((key) => (
+                            <tr key={key}>
+                                <td className="border-b border-gray-300 px-4 py-2">
+                                    {filteredExpenses[key]["expense-name"]}
+                                </td>
+                                <td className="border-b border-gray-300 px-4 py-2">
+                                    {filteredExpenses[key]["expense-amount"]}
+                                </td>
+                                <td className="border-b border-gray-300 px-4 py-2">
+                                    {filteredExpenses[key]["expense-date"]}
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
                         <tr>
                             <td
                                 colSpan="3"
-                                className="text-center border-b border-gray-300 px-4 py-2 text-middle"
+                                className="text-center border-b border-gray-300 px-4 py-2"
                             >
                                 No data available
                             </td>
                         </tr>
-                    ) : (
-                        <tr>
-                            <td>
-
-                            </td>
-                        </tr>
-                    )} */}
+                    )}
                 </tbody>
             </table>
         </div>
