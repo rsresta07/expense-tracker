@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ExpenseForm from "./ExpenseForm";
 import ExpenseList from "./ExpenseList";
 import ExpenseFilter from "./ExpenseFilter";
-import CategoryManager from "./CategoryManager"; // New component
 import axios from "axios";
 
 const ExpenseTracker = () => {
@@ -10,10 +9,10 @@ const ExpenseTracker = () => {
     const [endDate, setEndDate] = useState("");
     const [filterTriggered, setFilterTriggered] = useState(false);
     const [expenses, setExpenses] = useState({});
-    const [categories, setCategories] = useState({}); // New state for categories
+    const [categories, setCategories] = useState({}); 
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [refresh, setRefresh] = useState(false);
-    const [totalExpense, setTotalExpense] = useState(0); // State for total expense
+    const [totalExpense, setTotalExpense] = useState(0);
 
     useEffect(() => {
         getExpenses();
