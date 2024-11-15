@@ -11,7 +11,7 @@ const ExpenseList = ({
 
     useEffect(() => {
         filterExpenses();
-    }, [filterTriggered, expenses, refresh]); // Add refresh to dependencies
+    }, [filterTriggered, expenses, refresh]);
 
     const filterExpenses = () => {
         const filtered = Object.keys(expenses).reduce((result, key) => {
@@ -50,6 +50,9 @@ const ExpenseList = ({
                         <th className="border-b border-gray-300 px-4 py-2 text-left">
                             Date
                         </th>
+                        <th className="border-b border-gray-300 px-4 py-2 text-left">
+                            Category
+                        </th>
                     </tr>
                 </thead>
                 <tbody className="text-left">
@@ -66,12 +69,16 @@ const ExpenseList = ({
                                 <td className="border-b border-gray-300 px-4 py-2">
                                     {filteredExpenses[key]["expense-date"]}
                                 </td>
+                                <td className="border-b border-gray-300 px-4 py-2">
+                                    {filteredExpenses[key].category ||
+                                        "Uncategorized"}
+                                </td>
                             </tr>
                         ))
                     ) : (
                         <tr>
                             <td
-                                colSpan="3"
+                                colSpan="4"
                                 className="text-center border-b border-gray-300 px-4 py-2"
                             >
                                 No data available
